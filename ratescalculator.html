@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Translation Cost and Delivery Estimator</title>
+    <style>
+        body {
+            background-color: #FF4500; /* Halloween orange */
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            color: white;
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            color: white;
+            text-shadow: 2px 2px 5px black;
+        }
+
+        form {
+            background-color: #333;
+            padding: 20px;
+            border-radius: 10px;
+            width: 50%;
+            margin: 0 auto;
+            box-shadow: 5px 5px 15px black;
+        }
+
+        label {
+            font-size: 1.2em;
+            color: #fff;
+        }
+
+        input[type="number"] {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: none;
+        }
+
+        button {
+            background-color: #fff;
+            color: #333;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.2em;
+        }
+
+        button:hover {
+            background-color: #000;
+            color: #fff;
+        }
+
+        .results {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #333;
+            border-radius: 10px;
+            color: #ffebcd;
+            font-size: 1.2em;
+            box-shadow: 5px 5px 15px black;
+        }
+
+        footer {
+            margin-top: 40px;
+            color: #000;
+            font-size: 1.2em;
+        }
+
+        a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-shadow: 1px 1px 5px black;
+            color: #ffebcd;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Translation Cost and Delivery Estimator</h1>
+    
+    <form id="translation-form">
+        <label for="wordCount">Enter Word Count:</label><br>
+        <input type="number" id="wordCount" name="wordCount" required><br><br>
+        
+        <label for="languages">Select Language(s):</label><br>
+        <input type="checkbox" id="english" name="languages" value="English"> English<br>
+        <input type="checkbox" id="turkish" name="languages" value="Turkish"> Turkish<br>
+        <input type="checkbox" id="korean" name="languages" value="Korean"> Korean<br>
+        <input type="checkbox" id="russian" name="languages" value="Russian"> Russian<br>
+        <input type="checkbox" id="french" name="languages" value="French"> French<br>
+        <input type="checkbox" id="german" name="languages" value="German"> German<br>
+        <input type="checkbox" id="japanese" name="languages" value="Japanese"> Japanese<br>
+        <input type="checkbox" id="european_spanish" name="languages" value="European Spanish"> European Spanish<br>
+        <input type="checkbox" id="italian" name="languages" value="Italian"> Italian<br>
+        <input type="checkbox" id="polish" name="languages" value="Polish"> Polish<br>
+        <input type="checkbox" id="simplified_chinese" name="languages" value="Simplified Chinese"> Simplified Chinese<br>
+        <input type="checkbox" id="traditional_chinese" name="languages" value="Traditional Chinese"> Traditional Chinese<br>
+        <input type="checkbox" id="brazilian_portuguese" name="languages" value="Brazilian Portuguese"> Brazilian Portuguese<br>
+        <input type="checkbox" id="latam_spanish" name="languages" value="LATAM Spanish"> LATAM Spanish<br>
+        <input type="checkbox" id="ukrainian" name="languages" value="Ukrainian"> Ukrainian<br><br>
+        
+        <button type="button" onclick="calculateTranslation()">Calculate</button>
+    </form>
+    
+    <div class="results" id="result"></div>
+
+    <footer>
+        <p>Spreading terrifying fun across all media! <br> Check out our <a href="#">services</a>.</p>
+    </footer>
+
+    <script>
+        const ratesPerWord = {
+            "English": 0.13,
+            "Turkish": 0.12,
+            "Korean": 0.14,
+            "Russian": 0.12,
+            "French": 0.13,
+            "German": 0.14,
+            "Japanese": 0.13,
+            "European Spanish": 0.12,
+            "Italian": 0.13,
+            "Polish": 0.12,
+            "Simplified Chinese": 0.08,
+            "Traditional Chinese": 0.13,
+            "Brazilian Portuguese": 0.10,
+            "LATAM Spanish": 0.10,
+            "Ukrainian": 0.09
+        };
+
+        const wordsPerDay = 3500;
+
+        function calculateTranslation() {
+            const wordCount = parseInt(document.getElementById("wordCount").value);
+            const languages = document.querySelectorAll('input[name="languages"]:checked');
+            let result = "<h2>Results:</h2>";
+            
+            languages.forEach(language => {
+                const lang = language.value;
+                const rate = ratesPerWord[lang];
+                
+                if (rate) {
+                    const price = wordCount * rate;
+                    const daysNeeded = Math.ceil(wordCount / wordsPerDay);
+                    
+                    result += `<p>${lang}: Price: $${price.toFixed(2)}, Estimated Delivery: ${daysNeeded} day(s)</p>`;
+                }
+            });
+
+            document.getElementById("result").innerHTML = result;
+        }
+    </script>
+
+</body>
+</html>
